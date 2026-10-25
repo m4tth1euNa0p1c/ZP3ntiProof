@@ -30,7 +30,7 @@
     },
     {
       "id": "H13",
-      "status": "ready",
+      "status": "blocked",
       "priority": "P0",
       "title": "Two real-format synthetic issuer provenance adapters",
       "acceptance": "Versioned issuer roles and trust registry, verified commitments, signatures, source omissions and revocation; zero effects on invalid inputs.",
@@ -38,7 +38,8 @@
         "labs/horizon",
         "packages/horizon-demo",
         "tests/horizon"
-      ]
+      ],
+      "delivered": "2026-10-25: worker issue op, registry revocation list (REVOKED_ISSUER_KEY), JWS expert report and signed delegation ledger adapters, 9 tests with 38 refusal cases and mutation check; see docs/horizon/ISSUER_PROVENANCE_2026-10-25.md. Remaining: real issuers, openings handover protocol, KMS, MPC evaluation; no further local work ready."
     },
     {
       "id": "H15",

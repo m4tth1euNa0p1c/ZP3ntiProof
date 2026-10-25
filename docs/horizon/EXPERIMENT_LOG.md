@@ -206,3 +206,32 @@ build exit 0; `npm run agent:check:full` PASS twice (final report
 `.tools/agent-sessions/2026-10-24T23-37-19-731Z-42240.json`). Details and limits:
 [REMOTE_TARGET_2026-10-25.md](REMOTE_TARGET_2026-10-25.md). Laboratory
 contract only: no remote API, no authentication on the target (H17), no audit.
+
+## H13 — Issuer provenance adapters and revocation (25 October 2026)
+
+The Rust worker gained an `issue` operation (fresh blinding, Pedersen
+commitment to the validated fact, Ed25519 signature of the exact schema,
+role-dependent domain checks) and the trust registry a `revoked_public_keys_hex`
+list refused as `REVOKED_ISSUER_KEY` before any signature; registries without
+the field still parse and the historical public fixture still verifies. Two
+separate TypeScript adapters (`packages/horizon-demo/src/issuers.ts`) consume
+a JWS expert report (EdDSA, kid allowlist) and a signed delegation ledger line
+(six strict CSV columns, detached Ed25519 signature under a domain string),
+check case, tenant and validity window against the holder's request, and issue
+through the worker; the holder signs each issuance request (proof of
+possession), each source document backs one issuance, attestation validity is
+capped after the assessment, and the controller applies per-key revocation
+(`revokeIssuerKey`, operator route `/api/revoke-key`) merged into the registry
+handed to the verifier. Five Rust tests and six TypeScript tests: nominal path
+admitted once (effects 1), 23 expert and 17 delegation refusals with exact codes
+and zero issuances, the bearer-document residual recorded, swapped roles and
+foreign holders refused with zero effects (SDK pinning and raw
+`INVALID_SIGNATURE`), per-key revocation refusing new challenges, revocation
+injected into a remote dispatch refused before any target attempt. Four
+mutations (skipped report signature, ignored delegation window, uncompared case
+identity, ignored revocation list) were each caught. Horizon `cargo test`
+20 + 4, fmt/clippy exit 0, `issuers.test.ts` 6/6, `test:horizon` 53/53,
+typecheck exit 0, `agent:check:full` PASS twice (final report
+`.tools/agent-sessions/2026-10-25T00-03-18-537Z-5016.json`); details in
+[ISSUER_PROVENANCE_2026-10-25.md](ISSUER_PROVENANCE_2026-10-25.md). Synthetic
+keys and documents only; no real issuer, KMS, MPC or audit.
