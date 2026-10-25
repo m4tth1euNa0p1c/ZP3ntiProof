@@ -66,25 +66,27 @@
     },
     {
       "id": "H12",
-      "status": "research",
+      "status": "blocked",
       "priority": "P1",
       "title": "Equivalent-statement Microsoft Vega comparative measurement",
       "acceptance": "Equivalent signatures, statements, environment and boundaries; otherwise separate comparisons, never a record claim.",
       "paths": [
         "docs/experiments",
         "scripts"
-      ]
+      ],
+      "delivered": "2026-10-25: protocol docs/experiments/vega/EQUIVALENT_STATEMENT_PLAN_2026-10-25.md (five equalities, two admissible paths, decision rule). Remaining: an authorized specification of the Vega credential circuit or a Path A implementation; no measurement, no ratio."
     },
     {
       "id": "H16",
-      "status": "research",
+      "status": "blocked",
       "priority": "P1",
       "title": "CPU/GPU/PQ research feasibility and resource budget",
       "acceptance": "No GPU benchmark without GPU receipt independently verified; full PQ chain required, no signature-only relabeling; cost and limits explicit.",
       "paths": [
         "docs/experiments/gpu",
         "docs/publication"
-      ]
+      ],
+      "delivered": "2026-10-25: evidence rules and parameterized budget docs/experiments/gpu/CPU_GPU_PQ_FEASIBILITY_2026-10-25.md. Remaining: a GPU receipt independently verified (needs a documented memory-limit change or an authorized rented GPU) and a reviewed PQ profile study; no GPU run, no PQ claim."
     }
   ]
 }

@@ -18,7 +18,8 @@ states its own scope and limitations.
 | Automate proofs and sandbox | [Reusable GitHub Actions](GITHUB_ACTIONS.md) |
 | Evaluate Azure/GCP and customize the foundations | [Comparison](CLOUD_COMPARISON.md), [local validation](VALIDATION.md) |
 | Read what production would require and why the verdict is NO-GO | [Production threat model, 25 October 2026](PRODUCTION_THREAT_MODEL_2026-10-25.md) |
-| Examine the CUDA experiment | [GPU report](../experiments/gpu/README.md), negative results retained |
+| Examine the CUDA experiment | [GPU report](../experiments/gpu/README.md), negative results retained, [CPU/GPU/PQ evidence rules and budget](../experiments/gpu/CPU_GPU_PQ_FEASIBILITY_2026-10-25.md) |
+| Compare with Vega without a record claim | [Equivalent-statement protocol](../experiments/vega/EQUIVALENT_STATEMENT_PLAN_2026-10-25.md), [executed references](../horizon/COMPETITOR_COMPARISON.md) |
 | Check public claims | [Editorial register](CLAIMS.md), [checklist](RELEASE_CHECKLIST.md) |
 | Read the decision and the checks actually run | [Dated publication review](PUBLICATION_REVIEW_2026-10-17.md) |
 | Read security fixes and limitations | [Agent counter-review](INDEPENDENT_AGENT_REVIEW.md), [dependencies](DEPENDENCY_REVIEW.md), [local validation](LOCAL_VALIDATION_2026-10-17.json) |
