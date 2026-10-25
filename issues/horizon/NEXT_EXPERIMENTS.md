@@ -58,8 +58,8 @@ separated from the target. Accept at most one effect despite two processes and
 recovery. Without an adequate target contract: keep UNKNOWN and forbid automatic
 retry. Initial tests: `npm run test:horizon`, mandatory extension before production.
 **Delivered 25 October 2026 (laboratory)**: separate durable sandbox target with
-idempotency key, version precondition, status route and fence; controller
-dispatch/reconciliation; nine counted scenarios, see
+idempotency key, version precondition, deadline, status route and fence;
+controller dispatch/reconciliation; thirteen counted scenarios, see
 [docs/horizon/REMOTE_TARGET_2026-10-25.md](../../docs/horizon/REMOTE_TARGET_2026-10-25.md).
 **Still open**: a real target contract accepted by its operator, authentication
 of the target (H17), a true two-process crash trial on the remote path.
@@ -71,6 +71,11 @@ sources and side channels. Validate metadata leakage/correlation with
 the stakeholders. Prove the limits of Ed25519/Ristretto against quantum attacks,
 without a post-quantum label. No-Go if an anonymity need is incompatible with this
 profile. Tests: `cargo test --locked --manifest-path labs/horizon/Cargo.toml`.
+**Review package assembled 25 October 2026** (the review itself has not taken
+place): [docs/publication/EXTERNAL_REVIEW_PACKAGE_2026-10-25.md](../../docs/publication/EXTERNAL_REVIEW_PACKAGE_2026-10-25.md)
+lists the relation, domains, encodings, randomness, parsing, assumptions,
+fixtures, test suites and ten open objections with their falsification
+experiments.
 Local input for the auditor (not a substitute): the SEC-1 binding regression
 suite and its mutation check, [docs/horizon/VERIFIER_BINDING_TESTS_2026-10-25.md](../../docs/horizon/VERIFIER_BINDING_TESTS_2026-10-25.md),
 plus `npm run test:horizon` and `npm run test:proofkit`.

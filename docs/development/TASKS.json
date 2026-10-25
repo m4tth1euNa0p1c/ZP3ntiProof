@@ -50,7 +50,8 @@
       "paths": [
         "docs/horizon",
         "docs/whitepaper"
-      ]
+      ],
+      "delivered": "2026-10-25: review package docs/publication/EXTERNAL_REVIEW_PACKAGE_2026-10-25.md (relation, domains, encodings, RNG, parsing, assumptions, fixtures, test suites, ten open objections with falsification experiments). Remaining: the independent review itself; an agent review does not close H15."
     },
     {
       "id": "H17",

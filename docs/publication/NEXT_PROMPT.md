@@ -1,5 +1,27 @@
 # Next mission: resolve unknowns, not proclaim perfection
 
+## State on 25 October 2026 (read before the prompt below)
+
+The prompt below records the decisions of 17 October 2026 and is kept as
+written. Since then, the following items were delivered as a stack of draft
+pull requests on top of the release branch (none merged; `main` untouched):
+
+| Item (prompt item number, or regression suite) | Delivered | Where |
+| --- | --- | --- |
+| 2. H13 two authentic issuances | Laboratory adapters (JWS expert report, signed delegation ledger line), worker `issue` operation, registry revocation; synthetic keys only | [ISSUER_PROVENANCE](../horizon/ISSUER_PROVENANCE_2026-10-25.md) |
+| 3. H14 separate durable controller and target | Sandbox target with idempotency key, version precondition, deadline, status and fence; controller dispatch and reconciliation; 13 counted scenarios | [REMOTE_TARGET](../horizon/REMOTE_TARGET_2026-10-25.md) |
+| 4. H15 independent review package | Package assembled, objections listed with falsification experiments; the review itself has not taken place | [EXTERNAL_REVIEW_PACKAGE](EXTERNAL_REVIEW_PACKAGE_2026-10-25.md) |
+| 5. H17 requirements | Production threat model, requirement by requirement, verdict NO-GO | [PRODUCTION_THREAT_MODEL](PRODUCTION_THREAT_MODEL_2026-10-25.md) |
+| 5. H16 cost and GPU | Evidence rules and parameterized budget, no run, no price | [CPU_GPU_PQ_FEASIBILITY](../experiments/gpu/CPU_GPU_PQ_FEASIBILITY_2026-10-25.md) |
+| 7. Vega comparison | Equivalent-statement protocol, no measurement, no ratio | [EQUIVALENT_STATEMENT_PLAN](../experiments/vega/EQUIVALENT_STATEMENT_PLAN_2026-10-25.md) |
+| Verifier regression suite (SEC-1) | Binding of profile, transcript, layout, registry and malformed proofs, with mutation check | [VERIFIER_BINDING_TESTS](../horizon/VERIFIER_BINDING_TESTS_2026-10-25.md) |
+
+Still open and not deliverable by an agent: H11 (no interview conducted, no
+sponsor, no budget), H15 (no independent reviewer engaged), every experiment
+of the production threat model against a deployed environment, the merge of
+the pull-request stack, the tag and the manual release workflow. Agent
+reviews were applied to each delivered item; they are internal.
+
 ```text
 You are working in ZK-agentiK. Start with AGENTS.md, Git status, the
 register docs/publication/CLAIMS.md and issues/horizon/NEXT_EXPERIMENTS.md. Preserve

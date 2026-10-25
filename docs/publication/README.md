@@ -23,6 +23,7 @@ states its own scope and limitations.
 | Check public claims | [Editorial register](CLAIMS.md), [checklist](RELEASE_CHECKLIST.md) |
 | Read the decision and the checks actually run | [Dated publication review](PUBLICATION_REVIEW_2026-10-17.md) |
 | Read security fixes and limitations | [Agent counter-review](INDEPENDENT_AGENT_REVIEW.md), [dependencies](DEPENDENCY_REVIEW.md), [local validation](LOCAL_VALIDATION_2026-10-17.json) |
+| Review the cryptography independently | [External review package, 25 October 2026](EXTERNAL_REVIEW_PACKAGE_2026-10-25.md) (the review has not taken place) |
 | Continue the work | [Exact prompt](NEXT_PROMPT.md), [H11–H17 issues](../../issues/horizon/NEXT_EXPERIMENTS.md) |
 
 The [skills](../../.agents/skills/) and [agent contracts](../../.agents/roles/)
