@@ -21,8 +21,11 @@ export function createClaimTool(store: AuthorizationStore, worker: ProofWorker, 
         const state = store.state();
         if (state.revoked) throw new Error('REVOKED');
         if (!isDeepStrictEqual(presentation['evidence'], config.evidence)) throw new Error('EVIDENCE_SUBSTITUTION');
+        // The registry the verifier receives is the configured one plus the controller's own revocations (H13).
+        const configured = Array.isArray(config.trust['revoked_public_keys_hex']) ? config.trust['revoked_public_keys_hex'] as unknown[] : [];
+        const revokedKeys = [...new Set([...configured.map(String), ...store.revokedIssuerKeys()])].sort();
         return worker.request({ op: 'verify', presentation, expected,
-          trust: { ...config.trust, epoch: state.trust_epoch },
+          trust: { ...config.trust, epoch: state.trust_epoch, ...(revokedKeys.length ? { revoked_public_keys_hex: revokedKeys } : {}) },
           policy: { ...config.policy, policy_epoch: state.policy_epoch }, now_ms: clock() });
       },
       // Store rechecks time/epochs and consumes nonce + business operation under its own transaction.

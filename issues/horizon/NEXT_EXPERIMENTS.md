@@ -38,6 +38,13 @@ schema and publish revocation/version. Protocol for handing over the openings, K
 access rights and minimization. Evaluate MPC if no actor may know
 both witnesses. Tests: substituted source, wrong role, different case file,
 out-of-domain value, revocation during dispatch. All mutations refused.
+**Delivered 25 October 2026 (laboratory)**: worker `issue` operation, registry
+revocation list, two source-format adapters (JWS report, signed ledger line)
+with 38 refusal cases, see
+[docs/horizon/ISSUER_PROVENANCE_2026-10-25.md](../../docs/horizon/ISSUER_PROVENANCE_2026-10-25.md).
+**Still open**: real issuers and issuance change accepted by them, handover
+protocol for the openings, KMS and access rights, MPC evaluation, report
+freshness and issuance de-duplication policy.
 
 ## H14 — Recovery on a remote target, P0 integration
 

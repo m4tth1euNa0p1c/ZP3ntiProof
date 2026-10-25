@@ -1,8 +1,8 @@
 //! One request/response per JSON line. No stdout diagnostics or implicit clock.
 use anyhow::Result;
 use horizon_proof::{
-    Challenge, EvidencePair, Fixture, Presentation, PrivateWitness, ReusableProof, TrustRegistry,
-    VerificationPolicy, MAX_INPUT_BYTES,
+    Challenge, EvidencePair, Fixture, IssueRequest, Presentation, PrivateWitness, ReusableProof,
+    TrustRegistry, VerificationPolicy, MAX_INPUT_BYTES,
 };
 use serde::Deserialize;
 use serde_json::{json, Value};
@@ -39,6 +39,11 @@ enum Request {
     },
     Select {
         policy: VerificationPolicy,
+    },
+    /// H13 issuer-side operation: the issuer secret never leaves the issuer's process.
+    Issue {
+        request: IssueRequest,
+        issuer_secret_hex: String,
     },
 }
 
@@ -84,6 +89,10 @@ fn process(bytes: &[u8]) -> Result<Value> {
             now_ms,
         )?)?,
         Request::Select { policy } => serde_json::to_value(horizon_proof::select_method(&policy))?,
+        Request::Issue {
+            request,
+            issuer_secret_hex,
+        } => serde_json::to_value(horizon_proof::issue(&request, &issuer_secret_hex)?)?,
     })
 }
 

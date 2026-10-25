@@ -103,8 +103,8 @@ reproduce the credential circuit absent from the public repository.
 
 Compose enforces a non-root user, read-only rootfs, CPU/RAM/PID limits, no
 Linux capabilities and no privilege escalation. HTTP is local, without banking
-IAM and without TLS. The three operator routes (`/api/revoke`,
-`/api/rotate-policy`, `/api/reconcile`) refuse any request by default with
+IAM and without TLS. The four operator routes (`/api/revoke`,
+`/api/rotate-policy`, `/api/reconcile`, `/api/revoke-key` since 25 October 2026) refuse any request by default with
 HTTP 403. A separately configured operator server can provide
 `HORIZON_OPERATOR_TOKEN` (32 random bytes encoded as 64 lowercase hexadecimal
 characters); the client must provide `x-horizon-operator-token`. The comparison

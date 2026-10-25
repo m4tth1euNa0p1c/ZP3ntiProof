@@ -21,7 +21,8 @@ export class AuthorizationStore {
       CREATE TABLE IF NOT EXISTS dispatches(operation_id TEXT PRIMARY KEY, object_id TEXT NOT NULL, tenant TEXT NOT NULL,
         target_url TEXT NOT NULL, target_version INTEGER NOT NULL, at_ms INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS audit(sequence INTEGER PRIMARY KEY, event TEXT NOT NULL, previous_hash TEXT NOT NULL, hash TEXT NOT NULL);
-      CREATE TABLE IF NOT EXISTS config_binding(id INTEGER PRIMARY KEY CHECK(id=1), hash TEXT NOT NULL);`);
+      CREATE TABLE IF NOT EXISTS config_binding(id INTEGER PRIMARY KEY CHECK(id=1), hash TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS revoked_issuer_keys(public_key_hex TEXT PRIMARY KEY, at_ms INTEGER NOT NULL);`);
     // A database cannot silently acquire new trust roots, tenant or policy after restart.
     const binding = digest(JSON.stringify(config));
     this.db.prepare('INSERT OR IGNORE INTO config_binding VALUES(1,?)').run(binding);
@@ -199,6 +200,21 @@ export class AuthorizationStore {
     this.audit({ type: 'revoked', at_ms: this.clock() }); }); }
   rotatePolicy(): void { this.transaction(() => { this.db.exec('UPDATE state SET policy_epoch=policy_epoch+1 WHERE id=1');
     this.audit({ type: 'policy_rotated', at_ms: this.clock() }); }); }
+  /** H13: withdraw one issuer key (one-way). The trust epoch moves so that every outstanding challenge is stale;
+   * the key is added to the registry list the verifier receives, so attestations under it are refused even
+   * under new challenges. Unlike revoke(), issuance continues for attestations under the other keys. */
+  revokeIssuerKey(publicKeyHex: string): void {
+    const key = String(publicKeyHex);
+    if (!/^[0-9a-f]{64}$/.test(key)) throw new Error('INVALID_KEY');
+    this.transaction(() => {
+      this.db.prepare('INSERT OR IGNORE INTO revoked_issuer_keys VALUES(?,?)').run(key, this.clock());
+      this.db.exec('UPDATE state SET trust_epoch=trust_epoch+1 WHERE id=1');
+      this.audit({ type: 'issuer_key_revoked', public_key_hex: key, at_ms: this.clock() });
+    });
+  }
+  revokedIssuerKeys(): string[] {
+    return this.db.prepare('SELECT public_key_hex FROM revoked_issuer_keys ORDER BY public_key_hex').all().map(row => String(row['public_key_hex']));
+  }
   /** Local target only: terminal states are never rewritten and remotely dispatched operations are refused. */
   reconcile(operationId: string): string {
     return this.transaction(() => {

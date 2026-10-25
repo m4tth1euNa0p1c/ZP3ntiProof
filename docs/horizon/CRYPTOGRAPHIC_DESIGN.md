@@ -70,7 +70,11 @@ issuer identifier, tenant, case subject, `currency = EUR`, `exponent = 2`,
 business version, holder public key, validity start/end and Ristretto
 commitment. A strictly verified Ed25519 signature protects the complete
 canonical encoding. Keys are chosen from the local registry; a key present in
-the attestation does not elevate the issuer's rights.
+the attestation does not elevate the issuer's rights. Since 25 October 2026
+(H13) the registry may list revoked issuer keys (`revoked_public_keys_hex`,
+absent in older registries) and two separate issuer adapters produce the
+attestations from a JWS expert report and a signed delegation ledger line; see
+[ISSUER_PROVENANCE_2026-10-25.md](ISSUER_PROVENANCE_2026-10-25.md).
 
 The challenge contains at minimum tenant, client, audience, exact action,
 operation, object, subject, policy identifier/version, trust epoch,

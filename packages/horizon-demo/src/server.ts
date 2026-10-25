@@ -49,7 +49,7 @@ export function createHorizonServer(options: ServerOptions) {
   let preparation: Promise<unknown> | undefined;
   let inFlight = 0;
   const operatorToken = options.operatorToken ?? process.env['HORIZON_OPERATOR_TOKEN'] ?? '';
-  const operatorRoutes = new Set(['/api/revoke', '/api/rotate-policy', '/api/reconcile']);
+  const operatorRoutes = new Set(['/api/revoke', '/api/rotate-policy', '/api/reconcile', '/api/revoke-key']);
   const server = createServer(async (request, response) => {
     response.setHeader('X-Content-Type-Options', 'nosniff');
     response.setHeader('Referrer-Policy', 'no-referrer');
@@ -115,6 +115,10 @@ export function createHorizonServer(options: ServerOptions) {
       // These are explicit sandbox operator controls, absent from the MCP agent toolset.
       if (request.url === '/api/revoke') { z.strictObject({}).parse(input); store.revoke(); return send(response, 200, { revoked: true }); }
       if (request.url === '/api/rotate-policy') { z.strictObject({}).parse(input); store.rotatePolicy(); return send(response, 200, { rotated: true }); }
+      if (request.url === '/api/revoke-key') {
+        const { public_key_hex } = z.strictObject({ public_key_hex: z.string().regex(/^[0-9a-f]{64}$/) }).parse(input);
+        store.revokeIssuerKey(public_key_hex); return send(response, 200, { revoked_key: public_key_hex, trust_epoch: store.state().trust_epoch });
+      }
       if (request.url === '/api/reconcile') {
         const { operation_id } = z.strictObject({ operation_id: z.string().regex(/^[0-9a-f]{64}$/) }).parse(input);
         return send(response, 200, { status: target ? await store.reconcileWith(target, operation_id) : store.reconcile(operation_id) });

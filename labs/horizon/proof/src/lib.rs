@@ -90,6 +90,11 @@ pub struct TrustRegistry {
     pub epoch: u64,
     pub amount_issuer: IssuerKey,
     pub cap_issuer: IssuerKey,
+    /// Issuer public keys withdrawn by the verifier's operator (H13). Absent in registries
+    /// written before 2026-10-25, which keep parsing; attestations under a listed key are refused
+    /// before any signature check. The field is verifier-local and never enters a commitment.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub revoked_public_keys_hex: Vec<String>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
@@ -549,6 +554,11 @@ pub fn verify(
     ] {
         let body = &signed_evidence.body;
         ensure!(body.issuer == issuer.issuer, "UNKNOWN_ISSUER");
+        for revoked in &trust.revoked_public_keys_hex {
+            // Canonical lowercase hex only: a differently cased entry must not silently never match.
+            decode::<32>(revoked)?;
+            ensure!(revoked != &issuer.public_key_hex, "REVOKED_ISSUER_KEY");
+        }
         ensure!(
             body.tenant == expected.tenant && body.subject == expected.subject,
             "SUBJECT_MISMATCH"
@@ -597,6 +607,88 @@ pub fn verify(
         object_id: expected.object_id.clone(),
         not_before_ms: not_before,
         expires_at_ms: expiry,
+    })
+}
+
+/// H13 issuance request: one authority, one validated fact, one holder. The authority is
+/// responsible for the truth of `value`; this function only builds and signs the exact schema.
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct IssueRequest {
+    pub role: Role,
+    pub issuer: String,
+    pub tenant: String,
+    pub subject: String,
+    pub holder_public_key_hex: String,
+    pub valid_from_ms: u64,
+    pub valid_until_ms: u64,
+    /// Minor units (`currency = EUR`, `exponent = 2`). Amount: `1..=2^32`; cap: `1..=2^33 - 1`.
+    pub value: u64,
+}
+
+/// Opening handed to the holder only. Never part of a public configuration.
+#[derive(Clone, Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
+pub struct Opening {
+    pub value: u64,
+    pub blinding_hex: String,
+}
+
+#[derive(Clone, Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
+pub struct Issued {
+    pub evidence: SignedEvidence,
+    pub opening: Opening,
+}
+
+/// Issuer-side work: fresh blinding, Pedersen commitment to the validated fact, Ed25519
+/// signature over the canonical body under the issuer domain. Refuses out-of-domain values
+/// so that an issued attestation can always be opened within the relation's bounds.
+pub fn issue(request: &IssueRequest, issuer_secret_hex: &str) -> Result<Issued> {
+    for value in [&request.issuer, &request.tenant, &request.subject] {
+        label(value)?;
+    }
+    ensure!(
+        request.valid_from_ms < request.valid_until_ms,
+        "EVIDENCE_TIME"
+    );
+    key(&request.holder_public_key_hex)?;
+    let upper = match request.role {
+        Role::Amount => RANGE,
+        Role::Cap => 2 * RANGE - 1,
+    };
+    ensure!((1..=upper).contains(&request.value), "VALUE_OUT_OF_DOMAIN");
+    let signer = SigningKey::from_bytes(&decode(issuer_secret_hex)?);
+    let blinding = Scalar::random(&mut OsRng);
+    let body = Evidence {
+        profile: PROFILE.into(),
+        role: request.role,
+        issuer: request.issuer.clone(),
+        tenant: request.tenant.clone(),
+        subject: request.subject.clone(),
+        currency: "EUR".into(),
+        exponent: 2,
+        version: 1,
+        holder_public_key_hex: request.holder_public_key_hex.clone(),
+        valid_from_ms: request.valid_from_ms,
+        valid_until_ms: request.valid_until_ms,
+        commitment_hex: hex::encode(
+            pedersen_generators()
+                .commit(Scalar::from(request.value), blinding)
+                .compress()
+                .to_bytes(),
+        ),
+    };
+    let signature_hex = signed(b"horizon/issuer-attestation/v1", &body, &signer)?;
+    Ok(Issued {
+        evidence: SignedEvidence {
+            body,
+            signature_hex,
+        },
+        opening: Opening {
+            value: request.value,
+            blinding_hex: hex::encode(blinding.to_bytes()),
+        },
     })
 }
 
@@ -685,6 +777,7 @@ impl Fixture {
                     issuer: "delegation".into(),
                     public_key_hex: hex::encode(issuer_c.verifying_key().to_bytes()),
                 },
+                revoked_public_keys_hex: Vec::new(),
             },
             evidence,
             witness: PrivateWitness {
@@ -705,3 +798,6 @@ mod tests;
 
 #[cfg(test)]
 mod binding_tests;
+
+#[cfg(test)]
+mod issuer_tests;

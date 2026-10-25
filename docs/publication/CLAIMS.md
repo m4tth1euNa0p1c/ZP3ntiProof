@@ -7,7 +7,7 @@ identify the candidate commit and its current checks.
 
 | ID | Admissible claim | Status and evidence | Limitation / falsification condition |
 | --- | --- | --- | --- |
-| P01 | The Horizon profile proves a relation over two committed amounts | Implementation and [statement](../horizon/FORMAL_STATEMENT.md) | Truth of facts and honest issuance outside the proof; H13 |
+| P01 | The Horizon profile proves a relation over two committed amounts | Implementation and [statement](../horizon/FORMAL_STATEMENT.md); since 2026-10-25 two synthetic [issuer adapters](../horizon/ISSUER_PROVENANCE_2026-10-25.md) issue the attestations from real-format sources with revocation | Truth of facts and honest issuance outside the proof; synthetic issuers only, no KMS or real source; H13 remains open for real issuers |
 | P02 | Amounts a and c remain hidden from the controller in the intended presentation | Model and [analysis](../horizon/CRYPTOGRAPHIC_DESIGN.md) | Public commitments A and C; prover knows both openings; correlatable metadata; external audit H15 absent |
 | P03 | B reuses an immutable proof and signs a complete fresh challenge | [Architecture](../horizon/ARCHITECTURE.md) | Not a new proof of knowledge; no promise of unlinkability |
 | P04 | Invalid requests in the tested scenarios do not trigger the local effect | Tests and [log](../horizon/EXPERIMENT_LOG.md); since 2026-10-25 the [SEC-1 binding suite](../horizon/VERIFIER_BINDING_TESTS_2026-10-25.md) lists each refused case, its code and the target counter | List the cases and commit; no universality over all inputs |

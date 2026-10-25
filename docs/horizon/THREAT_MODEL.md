@@ -59,8 +59,8 @@ mode intentionally discloses values and openings.
 ## Deployment and compliance
 
 The demonstration HTTP routes, with no user authentication, are restricted to
-loopback and fictitious organizations. The three operator routes (`/api/revoke`,
-`/api/rotate-policy`, `/api/reconcile`) now require a server-configured secret;
+loopback and fictitious organizations. The four operator routes (`/api/revoke`,
+`/api/rotate-policy`, `/api/reconcile`, `/api/revoke-key` since 25 October 2026) now require a server-configured secret;
 they fail closed when it is absent. Compose does not configure it and the
 browser does not receive it. A local shared secret is not banking IAM. See the
 [dated operator tests](../publication/OPERATOR_VALIDATION_2026-10-17.json).
