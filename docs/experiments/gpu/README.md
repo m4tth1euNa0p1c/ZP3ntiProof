@@ -111,3 +111,10 @@ neither this limitation nor the trust model.
 [NIST describes migration of vulnerable elliptic-curve primitives](https://pages.nist.gov/nccoe-migration-post-quantum-cryptography/)
 to post-quantum signatures and key establishment; this profile does not
 perform that migration.
+
+## Evidence rules and budget (25 October 2026)
+
+What a future GPU figure or post-quantum statement would require, and a
+parameterized budget without invented amounts, are in
+[CPU_GPU_PQ_FEASIBILITY_2026-10-25.md](CPU_GPU_PQ_FEASIBILITY_2026-10-25.md).
+The negative result above is unchanged.

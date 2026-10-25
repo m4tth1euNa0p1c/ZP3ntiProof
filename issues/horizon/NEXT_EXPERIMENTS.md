@@ -30,6 +30,10 @@ circuit, signature, parsing and proof of possession of the paper. Today the
 upstream SHA-256 benches are not enough. Reproduce the same inputs, security, CPU,
 preprocessing, memory and sizes before any ratio. `node scripts/horizon-vega.mjs`
 reproduces only the published SHA-256 reference. No record in the meantime.
+**Protocol documented 25 October 2026**:
+[docs/experiments/vega/EQUIVALENT_STATEMENT_PLAN_2026-10-25.md](../../docs/experiments/vega/EQUIVALENT_STATEMENT_PLAN_2026-10-25.md)
+defines the five equalities an equivalent statement requires, the two
+admissible paths and the decision rule; no new measurement, no ratio.
 
 ## H13 — Qualified issuance and provenance, P0 security
 
@@ -78,6 +82,11 @@ RSS per process, failures and throughput at variable concurrency. Measure cold/w
 network, storage and real source. Evaluate pre-generation of public parameters
 without an authorization cache and measure before/after with the same relations.
 No gain announced before validation. `npm run horizon:benchmark` produces the raw data.
+**Evidence rules and budget documented 25 October 2026**:
+[docs/experiments/gpu/CPU_GPU_PQ_FEASIBILITY_2026-10-25.md](../../docs/experiments/gpu/CPU_GPU_PQ_FEASIBILITY_2026-10-25.md)
+fixes what a GPU figure or a post-quantum statement would require, records the
+single negative GPU observation, and gives a parameterized budget without
+amounts; no GPU run, no PQ claim.
 
 ## H17 — Operations and compliance, P0 before production
 
