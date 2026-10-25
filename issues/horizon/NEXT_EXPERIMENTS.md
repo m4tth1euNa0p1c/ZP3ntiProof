@@ -87,3 +87,9 @@ DORA/GDPR review.
 Docker Compose is a local demonstration; it does not satisfy these criteria.
 Criterion: operations dossier and independent reviews, no implicit
 approval on the basis of the ZK proof alone.
+**Requirements documented 25 October 2026**:
+[docs/publication/PRODUCTION_THREAT_MODEL_2026-10-25.md](../../docs/publication/PRODUCTION_THREAT_MODEL_2026-10-25.md)
+maps IAM, mTLS, KMS, backup/restore, tenant isolation and operations
+requirements to the existing controls, marks each as exercised or not, and
+records the production NO-GO with the falsification experiments still to run.
+Nothing in that document has been exercised against a deployed system.

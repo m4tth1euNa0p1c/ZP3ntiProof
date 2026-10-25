@@ -190,6 +190,7 @@ test('HTTP operator authentication rejects every invalid configuration or token 
           { path: '/api/revoke', input: {} },
           { path: '/api/rotate-policy', input: {} },
           { path: '/api/reconcile', input: { operation_id: challenge.operation_id } },
+          { path: '/api/revoke-key', input: { public_key_hex: 'a'.repeat(64) } },
         ];
         for (const supplied of suppliedTokens) {
           if (configuration.valid && supplied === token) continue;
