@@ -67,7 +67,10 @@ browser does not receive it. A local shared secret is not banking IAM. See the
 Operator revocation routes must not be exposed as agent tools. CORS/CSP do not
 replace authentication. Industrialization requires mTLS/IAM, role separation,
 HSM/KMS, controlled origins, rotation/revocation, tested backups, external audit
-and a migration policy.
+and a migration policy. The requirement-by-requirement state, with what has
+been exercised and what has not, is in the
+[production threat model of 25 October 2026](../publication/PRODUCTION_THREAT_MODEL_2026-10-25.md);
+its verdict is NO-GO until the listed experiments are run.
 
 DORA, GDPR, the AI Act and sector obligations do not follow from a proof.
 Linkability and metadata may constitute personal data. This POC establishes no

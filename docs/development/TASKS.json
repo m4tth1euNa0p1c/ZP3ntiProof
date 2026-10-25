@@ -54,14 +54,15 @@
     },
     {
       "id": "H17",
-      "status": "research",
+      "status": "blocked",
       "priority": "P0",
       "title": "Threat model for production IAM and operational resilience",
       "acceptance": "Document reviewed mTLS/IAM/KMS/backup requirements, tenant isolation and production NO-GO until exercised.",
       "paths": [
         "docs/publication",
         "infra"
-      ]
+      ],
+      "delivered": "2026-10-25: requirements document docs/publication/PRODUCTION_THREAT_MODEL_2026-10-25.md (IAM, mTLS, KMS, backup/restore, tenant isolation, operations; exercised/not; production NO-GO; falsification experiments), reviewed by the read-only security reviewer and corrected. Remaining: every experiment in its section 4 against a deployed environment; no further local work ready."
     },
     {
       "id": "H12",

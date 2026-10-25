@@ -17,6 +17,7 @@ states its own scope and limitations.
 | Run a profile or verify artifacts | [Proofkit CLI](../../tools/proofkit/README.md), [catalog](../../evidence/catalog.json) |
 | Automate proofs and sandbox | [Reusable GitHub Actions](GITHUB_ACTIONS.md) |
 | Evaluate Azure/GCP and customize the foundations | [Comparison](CLOUD_COMPARISON.md), [local validation](VALIDATION.md) |
+| Read what production would require and why the verdict is NO-GO | [Production threat model, 25 October 2026](PRODUCTION_THREAT_MODEL_2026-10-25.md) |
 | Examine the CUDA experiment | [GPU report](../experiments/gpu/README.md), negative results retained |
 | Check public claims | [Editorial register](CLAIMS.md), [checklist](RELEASE_CHECKLIST.md) |
 | Read the decision and the checks actually run | [Dated publication review](PUBLICATION_REVIEW_2026-10-17.md) |
